@@ -1,0 +1,337 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2021-09-09/uiFormDefinition.schema.json#",
+	"view": {
+		"kind": "Form",
+		"properties": {
+			"title": "",
+			"steps": [
+				{
+					"name": "basics",
+					"label": "Basic Settings",
+					"description": "Project 15 Open Platform Deploy",
+					"elements": [
+						{
+							"name": "resourceScope",
+							"type": "Microsoft.Common.ResourceScope",
+							"subscription": {
+								"constraints": {
+									"validations": [
+										{
+											"permission": "Microsoft.Devices/provisioningServices/Write",
+											"message": "Must have write permission to create a new DPS's settings."
+										},
+										{
+											"permission": "Microsoft.Devices/iothubs/Write",
+											"message": "Must have write permission to create a new IoTHub's settings."
+										},
+										{
+											"permission": "Microsoft.EventHub/namespaces/Write",
+											"message": "Must have write permission to create a new Eventhubs' settings."
+										},
+										{
+											"permission": "Microsoft.Web/hostingEnvironments/Write",
+											"message": "Must have write permission to create a new App Service Environment."
+										},
+										{
+											"permission": "Microsoft.Storage/storageAccounts/write",
+											"message": "Must have write permission to creates a storage account."
+										},
+										{
+											"permission": "Microsoft.SignalRService/SignalR/write",
+											"message": "Must have write permission to create the SignalR's settings."
+										},
+										{
+											"permission": "Microsoft.Maps/accounts/write",
+											"message": "Must have write permission to create the Azure Map's settings."
+										}
+									]
+								},
+								"resourceProviders": [
+                                    "Microsoft.Devices",
+									"Microsoft.Web",
+                                    "Microsoft.EventHub",
+									"Microsoft.Storage",
+									"Microsoft.SignalRService",
+                                    "Microsoft.Maps"
+								]
+							},
+							"location": {
+								"label": "Region",
+								"toolTip": "Azure region",
+								"resourceTypes": [
+                                    "Microsoft.Devices/iothubs",
+                                    "Microsoft.EventHub/namespaces",
+                                    "Microsoft.Devices/provisioningServices",
+									"Microsoft.SignalRService/SignalR",
+									"Microsoft.Storage/storageAccounts",
+									"Microsoft.Web/serverfarms",
+									"Microsoft.Web/sites",
+                                    "Microsoft.Maps/accounts",
+									"microsoft.resources/resourcegroups"
+								]
+							}
+						},
+						{
+							"name": "uniqueId",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Unique ID",
+							"toolTip": "String to make service names unique",
+							"placeholder": "Enter unique ID, or leave blank to automatically generate unique string.",
+							"multiLine": false,
+							"constraints": {
+								"required": false,
+								"validations": [
+									{
+										"regex": "^[a-z0-9A-Z]{3,10}$",
+										"message": "Only alphanumeric characters are allowed, and the value must be 3-10 characters long."
+									}
+								]
+							},
+							"visible": true
+						}
+					]
+				},
+				{
+					"name": "iotConfig",
+					"label": "IoT Service settings",
+					"elements": [
+						{
+							"name": "iotInfo",
+							"type": "Microsoft.Common.InfoBox",
+							"visible": true,
+							"options": {
+								"icon": "Info",
+								"text": "Give a name to your Azure Services or accept default names.  Unique ID will be appended."
+							}
+						},
+						{
+							"name": "iothubName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "IoT Hub Name",
+							"defaultValue": "P15-IoTHub",
+							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-39 characters long. (11 characters reserved for unique ID)",
+							"placeholder": "Specify a name of new IoT Hub",
+							"constraints": {
+								"required": true,
+								"validations": [
+									{
+										"regex": "^(([a-z0-9A-Z]*-)*[a-z0-9A-Z]+){3,39}$",
+										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-39 characters long. (11 characters reserved for unique ID)"
+									}
+								]
+							},
+							"visible": true
+						},
+						{
+							"name": "dpsName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Device Provisioning Service (DPS) Name",
+							"defaultValue": "P15-DPS",
+							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 1-53 characters long. (11 characters reserved for unique ID)",
+							"placeholder": "Specify a name of new DPS",
+							"constraints": {
+								"required": true,
+								"validations": [
+									{
+										"regex": "^(([a-z0-9A-Z]*-)*[a-z0-9A-Z]+){3,53}$",
+										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 1-53 characters long. (11 characters reserved for unique ID)"
+									}
+								]
+							},
+							"visible": true
+						},
+						{
+							"name": "eventhubsName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Event Hubs Name",
+							"defaultValue": "P15-EventHubs",
+							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 6-39 characters long. (11 characters reserved for unique ID)",
+							"placeholder": "Specify a name of new Event Hubs",
+							"constraints": {
+								"required": true,
+								"validations": [
+									{
+										"regex": "^(([a-z0-9A-Z]*-)*[a-z0-9A-Z]+){6,39}$",
+										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 6-39 characters long. (11 characters reserved for unique ID)"
+									}
+								]
+							},
+							"visible": true
+						},
+						{
+							"name": "signalrName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "SignalR Name",
+							"defaultValue": "P15-SignalR",
+							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-52 characters long. (11 characters reserved for unique ID)",
+							"placeholder": "Specify a name of new SignarlR",
+							"constraints": {
+								"required": true,
+								"validations": [
+									{
+										"regex": "^(([a-z0-9A-Z]*-)*[a-z0-9A-Z]+){3,52}$",
+										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-52 characters long. (11 characters reserved for unique ID)"
+									}
+								]
+							},
+							"visible": true
+						},
+						{
+							"name": "storageName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Storage Account Name",
+							"defaultValue": "p15stor",
+							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-14 characters long. (10 characters reserved for unique ID)",
+							"placeholder": "Specify a name of new Storage Account",
+							"constraints": {
+								"required": true,
+								"validations": [
+									{
+										"regex": "^([a-z0-9]){3,24}$",
+										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-14 characters long. (10 characters reserved for unique ID)"
+									}
+								]
+							},
+							"visible": true
+						},
+                        {
+							"name": "mapName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Azure Map Name",
+							"defaultValue": "P15-Map",
+							"toolTip": "Only alphanumerics, underscores, periods, and hyphens are allowed, and the value must be 1-87 characters long. (11 characters reserved for unique ID)",
+							"placeholder": "Specify a name of new Azure Map",
+							"constraints": {
+								"required": true,
+								"validations": [
+									{
+										"regex": "^(([a-z0-9A-Z]*[-._])*[a-z0-9A-Z]+){1,98}$",
+										"message": "Only alphanumerics, underscores, periods, and hyphens are allowed, and the value must be 1-87 characters long. (11 characters reserved for unique ID)"
+									}
+								]
+							},
+							"visible": true
+						}
+                    ]
+				},
+                {
+					"name": "appsvcConfig",
+					"label": "Web Portal settings",
+					"elements": [
+						{
+							"name": "appsvcInfo",
+							"type": "Microsoft.Common.InfoBox",
+							"visible": true,
+							"options": {
+								"icon": "Info",
+								"text": "Give a name to your Web App Dashboard.  The template provisions 3 services with suffixes."
+							}
+						},
+						{
+							"name": "appsvcName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Web App Name",
+							"defaultValue": "P15",
+							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 1-20 characters long. (20 characters reserved for unique ID)",
+							"placeholder": "Specify a name of new Web App.",
+							"constraints": {
+								"required": true,
+								"validations": [
+									{
+										"regex": "^(([a-z0-9A-Z]*-)*[a-z0-9A-Z]+){1,20}$",
+										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 1-20 characters long. (20 characters reserved for unique ID)"
+									}
+								]
+							},
+							"visible": true
+						}
+
+					]
+				},
+				{
+					"name": "sourceControl",
+					"label": "Application Deployment settings",
+					"elements": [
+						{
+							"name": "sourceControlInfo",
+							"type": "Microsoft.Common.InfoBox",
+							"visible": true,
+							"options": {
+								"icon": "Info",
+								"text": "Give a name to your Web App and Functions app Github repositories."
+							}
+						},
+						{
+							"name": "webAppGithubRepoUrl",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Web App Github Repo",
+							"placeholder": "Provide repository URL for WebApp",
+							"toolTip": "Provide repository URL for WebApp",
+							"defaultValue": "https://github.com/microsoft/project15-openplatform-webapp.git",
+							"constraints": {
+								"required": true,
+								"validationMessage": "WebApp repo url"
+							}
+						},
+						{
+							"name": "WebAppGithubRepoBranch",
+							"type": "Microsoft.Common.TextBox",
+							"label": "WebApp Github Repo Branch",
+							"placeholder": "Provide repository branch for WebApp",
+							"toolTip": "Provide repository branch for WebApp",
+							"defaultValue": "master",
+							"constraints": {
+								"required": true,
+								"validationMessage": "WebApp repo branch"
+							}
+						},
+						{
+							"name": "functionsAppGithubRepoUrl",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Functions App Github Repo",
+							"placeholder": "Provide repository URL for Functions App",
+							"toolTip": "Provide repository URL for Functions App",
+							"defaultValue": "https://github.com/microsoft/project15-openplatform-functions.git",
+							"constraints": {
+								"required": true,
+								"validationMessage": "Functions App repo url"
+							}
+						},
+						{
+							"name": "functionsAppGithubRepoBranch",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Functions App Github Repo Branch",
+							"placeholder": "Provide repository branch for Functions App",
+							"toolTip": "Provide repository branch for Functions App",
+							"defaultValue": "master",
+							"constraints": {
+								"required": true,
+								"validationMessage": "Functions App repo branch"
+							}
+						}
+					]
+				}
+			]
+		},
+		"outputs": {
+			"parameters": {
+				"rgName": "[steps('basics').resourceScope.resourceGroup.name]",
+				"UniqueId": "[steps('basics').uniqueId]",
+				"iothub_name": "[steps('iotConfig').iothubName]",
+				"dps_name": "[steps('iotConfig').dpsName]",
+				"eventhubs_name": "[steps('iotConfig').eventhubsName]",
+				"signalr_name": "[steps('iotConfig').signalrName]",
+				"storage_name": "[steps('iotConfig').storageName]",
+                "map_name": "[steps('iotConfig').mapName]",
+                "appsvc_name": "[steps('appsvcConfig').appsvcName]",
+				"git_webapp_repo": "[if(not(empty(steps('sourceControl').webAppGithubRepoUrl)), steps('sourceControl').webAppGithubRepoUrl, '')]",
+				"git_webapp_branch": "[if(not(empty(steps('sourceControl').WebAppGithubRepoBranch)), steps('sourceControl').WebAppGithubRepoBranch, '')]",
+				"git_functionsapp_repo": "[if(not(empty(steps('sourceControl').functionsAppGithubRepoUrl)), steps('sourceControl').functionsAppGithubRepoUrl, '')]",
+				"git_functionsapp_branch": "[if(not(empty(steps('sourceControl').functionsAppGithubRepoBranch)), steps('sourceControl').functionsAppGithubRepoBranch, '')]"
+			},
+			"kind": "ResourceGroup",
+			"location": "[steps('basics').resourceScope.location.name]",
+			"resourceGroupId": "[steps('basics').resourceScope.resourceGroup.id]"
+		}
+	}
+}
