@@ -66,8 +66,9 @@
 									"Microsoft.Storage/storageAccounts",
 									"Microsoft.Web/serverfarms",
 									"Microsoft.Web/sites",
-                                    "Microsoft.Maps/accounts",
-									"microsoft.resources/resourcegroups"
+                  "Microsoft.Maps/accounts",
+									"microsoft.resources/resourcegroups",
+									"Microsoft.DigitalTwins/digitalTwinsInstances"
 								]
 							}
 						},
@@ -86,6 +87,36 @@
 										"message": "Only alphanumeric characters are allowed, and the value must be 3-10 characters long."
 									}
 								]
+							},
+							"visible": true
+						},
+						{
+							"name": "useFreeSKU",
+							"type": "bool",
+							"defaultValue": true,
+							"label": "Use Free SKU",
+							"toolTip": "Use Free SKUs of Azure services when available.",
+							"allowedValues": [
+								true,
+								false
+							  ],
+							"constraints": {
+								"required": true
+							},
+							"visible": true
+						},
+						{
+							"name": "addADT",
+							"type": "bool",
+							"defaultValue": false,
+							"label": "Include Azure Digital Twins (ADT)",
+							"toolTip": "Provision ADT",
+							"allowedValues": [
+								true,
+								false
+							  ],
+							"constraints": {
+								"required": true
 							},
 							"visible": true
 						}
@@ -315,7 +346,8 @@
 		},
 		"outputs": {
 			"parameters": {
-				"rgName": "[steps('basics').resourceScope.resourceGroup.name]",
+				"useFreeSKU": "[steps('basics').useFreeSKU]",
+				"addADT": "[steps('basics').addADT]",
 				"UniqueId": "[steps('basics').uniqueId]",
 				"iothub_name": "[steps('iotConfig').iothubName]",
 				"dps_name": "[steps('iotConfig').dpsName]",

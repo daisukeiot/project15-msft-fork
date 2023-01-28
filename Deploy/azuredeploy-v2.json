@@ -11,56 +11,63 @@
       "minLength": 3,
       "maxLength": 10
     },
-    "iothub_name": {
-			"type": "string",
-      "defaultValue": "P15-IoTHub"
-		},
-    "dps_name": {
-			"type": "string",
-      "defaultValue": "P15-DPS"
-		},
-    "eventhubs_name": {
-			"type": "string",
-      "defaultValue": "P15-EventHubs"
-		},
-    "signalr_name": {
-			"type": "string",
-      "defaultValue": "P15-SignalR"
-		},
-    "storage_name": {
-			"type": "string",
-      "defaultValue": "p15stor"
-		},
-    "appsvc_name": {
-			"type": "string",
-      "defaultValue": "P15-OpenPlatform"
-		},
-    "map_name": {
-			"type": "string",
-      "defaultValue": "P15-Map"
-		},
-    "git_webapp_repo": {
-			"type": "string",
-      "defaultValue": "https://github.com/daisukeiot/project15-openplatform-webapp.git"
-		},
-    "git_webapp_branch": {
-			"type": "string",
-      "defaultValue": "v2.0"
-		},
-    "git_functionsapp_repo": {
-			"type": "string",
-      "defaultValue": "https://github.com/daisukeiot/project15-openplatform-functions.git"
-		},
-    "git_functionsapp_branch": {
-			"type": "string",
-      "defaultValue": "v2.0"
-		},
-    "DevelopmentEnvironment": {
+    "useFreeSKU": {
+      "defaultValue": true,
+      "type": "bool",
+      "metadata": {
+        "description": "True to set up development environment with free SKUs.  Note: quotas and limintations apply."
+      }
+    },
+    "addADT": {
       "defaultValue": false,
       "type": "bool",
       "metadata": {
         "description": "True to set up development environment with free SKUs.  Note: quotas and limintations apply."
       }
+    },
+    "iothub_name": {
+      "type": "string",
+      "defaultValue": "P15-IoTHub"
+    },
+    "dps_name": {
+      "type": "string",
+      "defaultValue": "P15-DPS"
+    },
+    "eventhubs_name": {
+      "type": "string",
+      "defaultValue": "P15-EventHubs"
+    },
+    "signalr_name": {
+      "type": "string",
+      "defaultValue": "P15-SignalR"
+    },
+    "storage_name": {
+      "type": "string",
+      "defaultValue": "p15stor"
+    },
+    "appsvc_name": {
+      "type": "string",
+      "defaultValue": "P15-OpenPlatform"
+    },
+    "map_name": {
+      "type": "string",
+      "defaultValue": "P15-Map"
+    },
+    "git_webapp_repo": {
+      "type": "string",
+      "defaultValue": "https://github.com/microsoft/project15-openplatform-webapp.git"
+    },
+    "git_webapp_branch": {
+      "type": "string",
+      "defaultValue": "master"
+    },
+    "git_functionsapp_repo": {
+      "type": "string",
+      "defaultValue": "https://github.com/microsoft/project15-openplatform-functions.git"
+    },
+    "git_functionsapp_branch": {
+      "type": "string",
+      "defaultValue": "master"
     },
     "utcDate": {
       "type": "string",
@@ -68,8 +75,7 @@
     }
   },
   "variables": {
-    "envTag": "v2.0",
-    "prefix" : "[if(bool(parameters('DevelopmentEnvironment')), 'P15Dev', 'P15')]",
+    "envTag": "v2.1",
     "gitRepo": {
       "webApp": "[parameters('git_webapp_repo')]",
       "webAppBranch": "[parameters('git_webapp_branch')]",
@@ -85,7 +91,7 @@
       "apiVersion": "2022-04-30-preview",
       "eventHubsCG": "[concat(parameters('iothub_name'), '-', parameters('UniqueID'), '/events/eventHubsCG')]",
       "systemTopic": "IoTHubSystemTopic",
-      "sku": "[if(parameters('DevelopmentEnvironment'), 'F1', 'S1')]"
+      "sku": "[if(parameters('useFreeSKU'), 'F1', 'S1')]"
     },
     "iotHubSku": {
       "F1": {
@@ -113,7 +119,7 @@
       "name": "devicetelemetryhub",
       "ruleListen": "TelemetryListenRule",
       "ruleSend": "TelemetrySendRule",
-      "sku": "[if(parameters('DevelopmentEnvironment'), 'Basic', 'Standard')]",
+      "sku": "[if(parameters('useFreeSKU'), 'Basic', 'Standard')]",
       "cgFunction": "telemetry-functions-cg"
     },
     "eventHubsSku": {
@@ -131,7 +137,7 @@
     "signalR": {
       "name": "[concat(parameters('signalr_name'), '-', parameters('UniqueID'))]",
       "apiVersion": "2022-08-01-preview",
-      "sku": "[if(parameters('DevelopmentEnvironment'), 'Free_F1', 'Standard_S1')]"
+      "sku": "[if(parameters('useFreeSKU'), 'Free_F1', 'Standard_S1')]"
     },
     "signalRSku": {
       "Free_F1": {
@@ -149,11 +155,11 @@
       "functionsName": "[concat(parameters('appsvc_name'), '-Functions-', parameters('UniqueID'))]",
       "webappName": "[concat(parameters('appsvc_name'), '-Portal-', parameters('UniqueID'))]",
       "webappUrl": "[toLower(concat('https://', parameters('appsvc_name'), '-Portal-', parameters('UniqueID'), '.azurewebsites.net'))]",
-      "sku": "[if(parameters('DevelopmentEnvironment'), 'D1', 'S1')]"
+      "sku": "[if(parameters('useFreeSKU'), 'B1', 'S1')]"
     },
     "appSvcSku": {
-      "D1": {
-        "skuName": "D1"
+      "B1": {
+        "skuName": "B1"
       },
       "S1": {
         "skuName": "S1"
@@ -176,6 +182,16 @@
     },
     "eventGrid": {
       "apiVersion": "2020-04-01-preview"
+    },
+    "adt": {
+      "name": "[concat(resourceGroup().name, '-ADT-', parameters('UniqueID'))]",
+      "apiVersion": "2022-10-31",
+      "identity": "functionsidentity",
+      "roleId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'bcd981a7-7f74-457b-83e1-cceb9e632ffe')]"
+    },
+    "adtAuthorization": {
+      "apiVersion": "2020-04-01-preview",
+      "adtRoleName": "[guid(variables('adt').identity, variables('adt').roleId)]"
     }
   },
   "resources": [
@@ -641,6 +657,7 @@
         "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubs').nameSpace)]",
         "[resourceId('Microsoft.EventHub/Namespaces/EventHubs/AuthorizationRules', variables('eventHubs').nameSpace, variables('eventHubs').name, variables('eventHubs').ruleListen)]",
         "[resourceId('Microsoft.SignalRService/SignalR', variables('signalR').name)]",
+        "[resourceId('Microsoft.DigitalTwins/digitalTwinsInstances', variables('adt').name)]",
         "[resourceId('Microsoft.Maps/accounts', variables('map').name)]",
         "[resourceId('Microsoft.Resources/deployments', 'Deploy-IoT')]",
         "[resourceId('Microsoft.Resources/deployments', 'Deploy-Functions')]"
@@ -652,7 +669,8 @@
         "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storage').name,';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storage').name), variables('storage').apiVersion).keys[0].value)]",
         "EventHubConnectionString": "[listKeys(resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', variables('eventHubs').nameSpace, variables('eventHubs').name, variables('eventHubs').ruleListen),variables('eventhubs').apiVersion).primaryConnectionString]",
         "AzureSignalRConnectionString": "[concat('Endpoint=https://', toLower(variables('signalr').name), '.service.signalr.net;AccessKey=', listKeys(resourceId('Microsoft.SignalRService/signalR', toLower(variables('signalr').name)), variables('signalr').apiVersion).primaryKey, ';Version=1.0;')]",
-        "TELEMETRY_CG": "[variables('eventHubsSku')[variables('eventHubs').sku].cgFunction]"
+        "TELEMETRY_CG": "[variables('eventHubsSku')[variables('eventHubs').sku].cgFunction]",
+        "ADT_HOST_URL": "[if(parameters('addADT'), concat('https://', reference(resourceId('Microsoft.DigitalTwins/digitalTwinsInstances', variables('adt').name)).hostName), '')]"
       }
     },
     {
@@ -745,7 +763,8 @@
         "Azure__IoTHub__ConnectionString": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', variables('iothub').name)).hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs/Iothubkeys', variables('iothub').name, 'iothubowner'), variables('iothub').apiVersion).primaryKey)]",
         "Azure__AzureMap__MapKey": "[listKeys(resourceId('Microsoft.Maps/accounts', variables('map').name), variables('map').apiVersion).primaryKey]",
         "Azure__Dps__IdScope": "[reference(resourceId('Microsoft.Devices/ProvisioningServices',variables('dps').name)).idScope]",
-        "Azure__Dps__ConnectionString": "[concat('HostName=', variables('dps').name, '.azure-devices-provisioning.net;SharedAccessKeyName=provisioningserviceowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/provisioningServices/keys',variables('dps').name, 'provisioningserviceowner'), variables('dps').apiVersion).primaryKey)]"
+        "Azure__Dps__ConnectionString": "[concat('HostName=', variables('dps').name, '.azure-devices-provisioning.net;SharedAccessKeyName=provisioningserviceowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/provisioningServices/keys',variables('dps').name, 'provisioningserviceowner'), variables('dps').apiVersion).primaryKey)]",
+        "Azure__Dps__FunctionsWebHookUrl": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('appSvc').functionsName, 'Dps_Processor'), variables('appSvc').apiVersion).trigger_url]"
       }
     },
     {
@@ -760,6 +779,32 @@
       "kind": "Gen2",
       "properties": {
         "disableLocalAuth": false
+      }
+    },
+    {
+      "condition": "[parameters('addADT')]",
+      "name": "[variables('adt').name]",
+      "type": "Microsoft.DigitalTwins/digitalTwinsInstances",
+      "apiVersion": "[variables('adt').apiVersion]",
+      "location": "[variables('location')]",
+      "tags": {
+        "ENV": "[variables('envTag')]"
+      },
+      "properties": {}
+    },
+    {
+      "condition": "[parameters('addADT')]",
+      "name": "[variables('adtAuthorization').adtRoleName]",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "[variables('adtAuthorization').apiVersion]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites/config', variables('appSvc').functionsName, 'appsettings')]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[variables('adt').roleId]",
+        "principalId": "[reference(resourceId('Microsoft.Web/sites', variables('appSvc').functionsName), variables('appSvc').apiVersion, 'Full').identity.principalId]",
+        "scope": "[resourceGroup().id]",
+        "principalType": "ServicePrincipal"
       }
     }
   ],
