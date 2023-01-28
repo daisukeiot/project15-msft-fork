@@ -66,7 +66,7 @@
 									"Microsoft.Storage/storageAccounts",
 									"Microsoft.Web/serverfarms",
 									"Microsoft.Web/sites",
-                  "Microsoft.Maps/accounts",
+                  					"Microsoft.Maps/accounts",
 									"microsoft.resources/resourcegroups",
 									"Microsoft.DigitalTwins/digitalTwinsInstances"
 								]
@@ -92,31 +92,23 @@
 						},
 						{
 							"name": "useFreeSKU",
-							"type": "bool",
+							"type": "Microsoft.Common.CheckBox",
 							"defaultValue": true,
 							"label": "Use Free SKU",
 							"toolTip": "Use Free SKUs of Azure services when available.",
-							"allowedValues": [
-								true,
-								false
-							  ],
 							"constraints": {
-								"required": true
+								"required": false
 							},
 							"visible": true
 						},
 						{
 							"name": "addADT",
-							"type": "bool",
+							"type": "Microsoft.Common.CheckBox",
 							"defaultValue": false,
 							"label": "Include Azure Digital Twins (ADT)",
 							"toolTip": "Provision ADT",
-							"allowedValues": [
-								true,
-								false
-							  ],
 							"constraints": {
-								"required": true
+								"required": false
 							},
 							"visible": true
 						}
