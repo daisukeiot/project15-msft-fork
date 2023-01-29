@@ -90,7 +90,9 @@ You can find URL of Dashboard in **Output** pane.  Copy the URL and open with yo
 ## Next Step
 
 - [Brief introduction](OpenPlatformPortal.md) of Open Platform Portal
+- [Connect your phone](ConnectingPhone.md) to connect your phone to Open Platform
 - [Connect a device](ConnectingDevice.md) to the Open Platform web application
+- [Brief instruction on Azure Digital Twin](ADT.md) 
 - Developers : Learn more technical details of the Open Platform Open Platform Developer Guide : [Architecture Overview](../Developer-Guide/Architecture-Overview.md)
 
 [Project 15 from Microsoft - Open Platform](../README.md)
