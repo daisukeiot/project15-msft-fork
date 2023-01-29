@@ -181,7 +181,7 @@
       "apiVersion": "2021-12-01-preview"
     },
     "eventGrid": {
-      "apiVersion": "2020-04-01-preview"
+      "apiVersion": "2022-06-15"
     },
     "adt": {
       "name": "[concat(resourceGroup().name, '-ADT-', parameters('UniqueID'))]",
@@ -534,6 +534,56 @@
           }
         ],
         "allocationPolicy": "Hashed"
+      }
+    },
+    {
+      "name": "[variables('iotHub').systemTopic]",
+      "type": "Microsoft.EventGrid/systemTopics",
+      "apiVersion": "2022-06-15",
+      "location": "[variables('location')]",
+      "tags": {
+        "ENV": "[variables('envTag')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'Deploy-IoT')]",
+        "[resourceId('Microsoft.Resources/deployments', 'Deploy-Functions')]"
+      ],
+      "properties": {
+        "source": "[resourceId('Microsoft.Devices/IotHubs', variables('iotHub').name)]",
+        "topicType": "Microsoft.Devices.IoTHubs"
+      }
+    },
+    {
+      "name": "[concat(variables('iotHub').systemTopic, '/DeviceManagementEventSubscription')]",
+      "type": "Microsoft.EventGrid/systemTopics/eventSubscriptions",
+      "apiVersion": "[variables('eventGrid').apiVersion]",
+      "dependsOn": [
+        "[resourceId('Microsoft.EventGrid/systemTopics', variables('iotHub').systemTopic)]",
+        "[resourceId('Microsoft.Web/sites/config', variables('appSvc').functionsName, 'appsettings')]"
+      ],
+      "properties": {
+        "destination": {
+          "properties": {
+            "resourceId": "[resourceId('Microsoft.Web/sites/functions', variables('appSvc').functionsName, 'EventGrid_Processor')]",
+            "maxEventsPerBatch": 1,
+            "preferredBatchSizeInKilobytes": 64
+          },
+          "endpointType": "AzureFunction"
+        },
+        "filter": {
+          "includedEventTypes": [
+            "Microsoft.Devices.DeviceCreated",
+            "Microsoft.Devices.DeviceDeleted",
+            "Microsoft.Devices.DeviceConnected",
+            "Microsoft.Devices.DeviceDisconnected"
+          ]
+        },
+        "labels": [],
+        "eventDeliverySchema": "EventGridSchema",
+        "retryPolicy": {
+          "maxDeliveryAttempts": 30,
+          "eventTimeToLiveInMinutes": 1440
+        }
       }
     },
     {
