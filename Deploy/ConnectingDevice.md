@@ -26,34 +26,44 @@ In order to consume (e.g. visualize) data from a device, the device must be prov
 ### 1 : Creating a device identity in IoT Hub
 
 A device must be known to the solution.  Creating a device identity means registering a device entity in IoT Hub.
+In this instruction, we will use Raspberry Pi Azure IoT Online Simulator.
 
-1. In Open Platform Portal, click `Add Device`  
+1. Browse to Open Platform Web Dashboard with your browser
+1. Click **Device Management** in the Navigation Menu
+1. Click **Device Management** tab
+1. Click **Add a device**
+1. Give a name for the new device
+    e.g. PiSimulator1
+1. Click **+Create**
 
-    ![Provision 01](media/Provision-01.png)
+Once a new device is successfuly created, it should be added to the dropdown device list
 
-1. Enter a new device ID  
-
-    E.g. MyDevice01
-
-    ![Provision 02](media/Provision-02.png)
-
-1. Make sure the device is added to the list  
-
-    ![Provision 03](media/Provision-03.png)
+![IOTHUB 05](media/IOTHUB-05.png)
 
 ### 2. Preparing a device
 
 Each device firmware/device app has their own way of programming authentication information.  For this demo, we will use [Raspberry Pi Azure IoT Online Simulator](https://azure-samples.github.io/raspberry-pi-web-simulator/).
 
-1. Browse to **Raspberry Pi Azure IoT Online Simulator** with your browser  
-1. Select the new device you created above
-1. Click `Copy Connection String` to copy connection string into clipboard
+1. Browse to **Raspberry Pi Azure IoT Online Simulator** with your browser 
 
-    ![Provision 04](media/Provision-04.png)
+    Click **Raspberry Pi Simulator** in the Navigation Menu
 
-1. Replace `[Your IoT hub device connection string]` with the connection string
+1. Select the new device you created above, if not selected
+1. Click **Advanced (for Device Developers)**
 
-    ![Provision 04](media/Provision-05.png)
+    You should see fields are filled.
+
+1. Click green button next to **Primary Connection String**
+
+    This will copy the connection string in clipboard.
+
+![IOTHUB 06](media/IOTHUB-06.png)
+
+### 3. Connecting a device
+
+1. Switch to **Raspberry Pi Azure IoT Online Simulator**
+
+    Replace `[Your IoT hub device connection string]` with the connection string
 
     > [!IMPORTANT]  
     > Ensure the connection string is inside single quotes `` ` `` `` ` ``
@@ -66,49 +76,23 @@ Each device firmware/device app has their own way of programming authentication 
 
     Example :
 
-    ![Provision 06](media/Provision-06.png)
-
-### 3. Connecting the simulator to Open Platform
-
-A device with authentication information (Connection String) can connect to IoT Hub.
+    ![IOTHUB 07](media/IOTHUB-07.png)
 
 1. Click `Run` button to connect and start sending simulated telemetry to Open Platform.
 
-    ![Provision 07](media/Provision-07.png)
+    In the bottom right pane, you should see log saying the simulator is connected and sending telemetry.
+
+    ![IOTHUB 08](media/IOTHUB-08.png)
 
 1. Switch to Open Platform portal  
 
-    Confirm telemetry and events are pushed to the portal
+    Confirm telemetry and events are pushed to the portal.  
 
-    ![Provision 08](media/Provision-08.png)
+    > [!NOTE]
+    > Make sure you click **Stop** in Raspberry Pi Simulator or close browser when you are finished.
 
-## Visualizing telemetry
+    ![IOTHUB 09](media/IOTHUB-09.png)
 
-Open Platform pushes raw telemetry data to the web site using SignalR, as well as store them into TSI.
-
-You can visualize telemetry from the device by querying TSI and draw a line chart.
-
-Without IoT Plug and Play support, you **must** know the name of telemetry data and data type (Double or Long).
-
-- Telemetry data name  
-
-    You can find telemetry data name in raw data.  Expand telemetry entry in the portal to see data name.
-
-    E.g. with Raspberry Pi Simulator, telemetry names are `temperature` and `humidity`
-
-    ![Telemetry 01](media/Telemetry-01.png)
-
-- Telemetry data type  
-
-    TSI support `Long` and `Double`.
-
-To visualize telemetry from Non IoT Plug and Play device, you must specify these information to send query to TSI.
-
-1. Enter telemetry data name
-1. Select telemetry data type
-1. Click `Refresh` to show telemetry in a line chart  
-
-    ![Telemetry 02](media/Telemetry-02.png)
 
 ## Next Step
 
