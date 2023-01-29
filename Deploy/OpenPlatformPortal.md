@@ -1,65 +1,103 @@
 # Open Platform portal
 
-There are 5 sections in the portal
+The Web UI is structured with 3 key components.
 
-![Portal 01](media/Portal-01.png)
+1. Navigation Bar (Left menu)
+1. Dashboard view to visualize data
+1. Device Management View
 
-## 1 : Azure IoT Hub
+## Navigation Bar
 
-[Azure IoT Hub](https://docs.microsoft.com/en-us/azure/iot-hub/about-iot-hub) is a managed service, hosted in the cloud, that acts as a central message hub for bi-directional communication between your IoT application and the devices it manages.
-Open Platform uses IoT Hub to connect devices to the solution, receive messages, manage devices, and send commands to devices (if devices support commands).
+- Example of Menu.  You may add your own item/link to [_Layout.cshtml](https://github.com/microsoft/project15-openplatform-webapp/blob/master/OpenPlatformV2/Views/Shared/_Layout.cshtml) 
 
-In IoT Hub section, you can :
+## Dashboard
 
-- Select device
-- Create or delete device identities
-- View Device Connection String and Device Keys for the symmetric authentication
-- View IoT Plug and Play Digital Twin Model ID (DTMI)
-- Vies Device Twin  
-    Editing Device Twin desired property is not yet supported
-- Send Command  
-    Supports IoT Plug and Play device only
+Dashbaord view provides followings :
 
-## 2 : Device Provisioning Service
+- Azure Map
+    - If you device supports location data (e.g. GPS) with one of DTDL location information, the UI will add Pin to the map.  
+    - You may resize the map by dragging right bottom corner of the map.
 
-[Device Provisioning Service](https://docs.microsoft.com/en-us/azure/iot-dps/about-iot-dps) is a helper service for IoT Hub that enables zero-touch, just-in-time provisioning to the right IoT hub.
-Open Platform uses DPS to provision devices to the solution, if a device supports DPS.
+- Telemetry Chart
+    All telemetry data is displayed in line graph.  The chart is built based on JChart.  You may customize your view/chart in [Index.cshtml](https://github.com/microsoft/project15-openplatform-webapp/blob/master/OpenPlatformV2/Views/Home/Index.cshtml).
 
-In DPS section, you can :
+    - If the device is IoT Plug and Play, you may select data to display in the dropdown box.
+    - You may resize the map by dragging right bottom corner of the chart.
 
-- View individual enrollment information such as ID Scope, Symmetric Key that are used to provision devices
-- Add/Delete individual enrollments
+    ![Dashboard 01](media/DASHBOARD-01.png)
 
-## 3 : Azure Maps
+- Raw Data
+    All device data as well as device events are displayed in table format in **Telemetry/Event** tab.
+    To see detailed data, click on button on each line (far left).
 
-[Azure Maps](https://docs.microsoft.com/en-us/azure/azure-maps/about-azure-maps) is a collection of geospatial services to provide location intelligence  
+    ![Dashboard 02](media/DASHBOARD-02.png)
 
-> [!NOTE]  
-> By default, Open Platform deploys Azure Maps but does not use it.  Azure Maps is used for Azure Digital Twins demo.
+## Device Management
 
-## 4 : Time Series Insights (TSI)
+Device Management UI provides :
 
-You can use [Time Series Insights](https://docs.microsoft.com/en-us/azure/time-series-insights/overview-what-is-tsi) to collect, process, store, query and visualize data at Internet of Things (IoT) scale--data that's highly contextualized and optimized for time series.
+- Provision devices using Device Provisioning Service (DPS)
+- Manage DPS enrollment
+- Manage IoT Hub
 
-- The portal reads data from TSI to visualize time series data in a line chart  
-    The backend solution stores all telemetry from devices into TSI.  
+### Device Provisioning tab
 
-- If the device supports IoT Plug and Play, the portal populates telemetry in the list
+Device Provisioning tab provides UI to manage DPS enrollments.
 
-    ![Portal 02](media/Portal-02.png)
+- QR Code to connect your smartphone to Open Platform
 
-- If the device does NOT support IoT Plug and Play, manual entry of telemetry name and data type is required
+    You can use your smartphone to connect to Open Platform.  
+    
+    1. Install IoT Plug and Play smartphone app using QR code
+    1. Specify **Device ID** to generate QR code
+    1. Use IoT Plug and Play smartphone app to provision to Open Platform
 
-    ![Portal 03](media/Portal-03.png)
+    ![DPS 01](media/DPS-01.png)
 
-## 5 : Raw Data
+- Create a new Enrollment
 
-Open Platform receives raw data from the backend solution in real time.  There are two types of data, Telemetry and Events.
-[Read More ](../Developer-Guide/Data-Ingestion-Data-Pipeline.md) on data types.
+    If you need to create a new enrollment for your device, you can create symmetric key based enrollment.  
+
+    ![DPS 02](media/DPS-02.png)
+
+- Advanced
+
+    If you are a device firmware developer, this tab provides information you need to embed to your firmware code.
+
+    ![DPS 03](media/DPS-03.png)
+
+### Device Management tab
+
+Device Management tab provides UI to manage devices on IoT Hub.
+
+- Add a new Device
+
+    Manually create a new device.
+
+    ![IOTHUB 01](media/IOTHUB-01.png)
+
+- Interact with Device
+
+    Device commands are automatically populated for IoT Plug and Play devices.  For legacy devices, you may enter commands manually.
+
+    ![IOTHUB 02](media/IOTHUB-02.png)
+
+- Advanced
+
+    If you are a device firmware developer, this tab provides information you need to embed to your firmware code.
+
+    ![IOTHUB 03](media/IOTHUB-03.png)
+
+- Device Twin
+
+    You can display Device's twin in this tab.  Select a device from the list in the top to display Device Twin.
+
+    ![IOTHUB 04](media/IOTHUB-04.png)
 
 ## Next Step
 
-- [Connect a device](ConnectingDevice.md) to the Open Platform web application
+- [Connect your phone](ConnectingPhone.md) to connect your phone to Open Platform
+- [Connect a device](ConnectingDevice.md) directly to IoT Hub
 - Developers : Learn more technical details of the Open Platform Open Platform Developer Guide : [Architecture Overview](../Developer-Guide/Architecture-Overview.md)
 
 [Project 15 from Microsoft - Open Platform](../README.md)

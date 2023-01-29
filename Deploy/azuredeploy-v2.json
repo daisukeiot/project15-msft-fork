@@ -559,7 +559,8 @@
       "apiVersion": "[variables('eventGrid').apiVersion]",
       "dependsOn": [
         "[resourceId('Microsoft.EventGrid/systemTopics', variables('iotHub').systemTopic)]",
-        "[resourceId('Microsoft.Web/sites/config', variables('appSvc').functionsName, 'appsettings')]"
+        "[resourceId('Microsoft.Resources/deployments', 'Deploy-Functions')]",
+        "[resourceId('Microsoft.Web/sites/config', variables('appSvc').webappName, 'appsettings')]"
       ],
       "properties": {
         "destination": {
@@ -793,7 +794,9 @@
       "identity": {
         "type": "SystemAssigned"
       },
-      "properties": {}
+      "properties": {
+        "config": {}
+      }
     },
     {
       "name": "[concat(variables('appSvc').webappName, '/appsettings')]",
@@ -806,6 +809,7 @@
         "[resourceId('Microsoft.Devices/provisioningServices', variables('dps').name)]",
         "[resourceId('Microsoft.Resources/deployments', 'Deploy-Webapp')]",
         "[resourceId('Microsoft.Resources/deployments', 'Deploy-Functions')]",
+        "[resourceId('Microsoft.Web/sites', variables('appSvc').functionsName)]",
         "[resourceId('Microsoft.Web/sites/config', variables('appSvc').functionsName, 'appsettings')]"
       ],
       "properties": {

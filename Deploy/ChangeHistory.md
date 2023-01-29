@@ -57,3 +57,14 @@ A simulator running in the host for quick testing
 
 - Refactored DTDL model resolution
 - Fixed issue with sending commands
+
+
+## Version 2.0
+
+- Update Web UI
+- Remove TSI
+
+## Version 2.1
+
+- Add ADT
+- Add Event Grid

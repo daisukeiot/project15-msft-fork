@@ -23,9 +23,6 @@ Click **Deploy to Azure** button below
 > [!TIP]  
 > Right click the button below and select **Open link in new tab** or **Open lin in new window**
 
-> [!NOTE]  
-> This deployment will consume about 100 USD per month.  If you would like to deploy for your development, turn on `Development Environment` option to deploy with Free SKUs.  With Free SKUs, quotas and limitations apply.
-
 ## 2 : Personalize and configure Open Platform Deployment
 
 1. Select Subscription (if you have more than one)
@@ -54,6 +51,8 @@ Click **Deploy to Azure** button below
     With Free SKUs, quotas and limitations apply.
 
 1. If you would like to add Azure Digital Twins, select **Include Azure Digital Twins** 
+
+If you do not need to customize deployment, click **Review + create** to start deploying.
 
 ![ARM 01](media/ARM-01.png)
 
@@ -87,8 +86,6 @@ Deployment typically completes in less than 10 minutes.  Wait until deployment c
 You can find URL of Dashboard in **Output** pane.  Copy the URL and open with your favorite Web Browser.
 
 ![ARM 06](media/ARM-06.png)
-
-
 
 ## Next Step
 
