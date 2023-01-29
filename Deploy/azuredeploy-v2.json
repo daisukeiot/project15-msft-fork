@@ -560,6 +560,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.EventGrid/systemTopics', variables('iotHub').systemTopic)]",
         "[resourceId('Microsoft.Resources/deployments', 'Deploy-Functions')]",
+        "[resourceId('Microsoft.Web/sites', variables('appSvc').functionsName)]",
         "[resourceId('Microsoft.Web/sites/config', variables('appSvc').webappName, 'appsettings')]"
       ],
       "properties": {
@@ -864,11 +865,11 @@
   ],
   "outputs": {
     "UniqueId": {
-      "type": "String",
+      "type": "string",
       "value": "[parameters('UniqueID')]"
     },
-    "_Web_Site_Address": {
-      "type": "String",
+    "Web_Site_Address": {
+      "type": "string",
       "value": "[concat('https://',  variables('appSvc').webappName,'.azurewebsites.net/')]"
     }
   }
