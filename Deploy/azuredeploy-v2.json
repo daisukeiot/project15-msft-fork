@@ -27,15 +27,15 @@
     },
     "iothub_name": {
       "type": "string",
-      "defaultValue": "PQT-IoTHub"
+      "defaultValue": "PQY-IoTHub"
     },
     "eventhubs_name": {
       "type": "string",
-      "defaultValue": "PQT-EventHubs"
+      "defaultValue": "PQY-EventHubs"
     },
     "signalr_name": {
       "type": "string",
-      "defaultValue": "PQT-SignalR"
+      "defaultValue": "PQY-SignalR"
     },
     "storage_name": {
       "type": "string",
@@ -43,11 +43,11 @@
     },
     "appsvc_name": {
       "type": "string",
-      "defaultValue": "PQT-OpenPlatform"
+      "defaultValue": "PQY-OpenPlatform"
     },
     "map_name": {
       "type": "string",
-      "defaultValue": "PQT-Map"
+      "defaultValue": "PQY-Map"
     },
     "git_webapp_repo": {
       "type": "string",

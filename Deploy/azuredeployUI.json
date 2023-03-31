@@ -126,7 +126,7 @@
 							"name": "iothubName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "IoT Hub Name",
-							"defaultValue": "PQT-IoTHub",
+							"defaultValue": "PQY-IoTHub",
 							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-39 characters long. (11 characters reserved for unique ID)",
 							"placeholder": "Specify a name of new IoT Hub",
 							"constraints": {
@@ -144,7 +144,7 @@
 							"name": "eventhubsName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "Event Hubs Name",
-							"defaultValue": "PQT-EventHubs",
+							"defaultValue": "PQY-EventHubs",
 							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 6-39 characters long. (11 characters reserved for unique ID)",
 							"placeholder": "Specify a name of new Event Hubs",
 							"constraints": {
@@ -162,7 +162,7 @@
 							"name": "signalrName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "SignalR Name",
-							"defaultValue": "PQT-SignalR",
+							"defaultValue": "PQY-SignalR",
 							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-52 characters long. (11 characters reserved for unique ID)",
 							"placeholder": "Specify a name of new SignarlR",
 							"constraints": {
@@ -198,7 +198,7 @@
 							"name": "mapName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "Azure Map Name",
-							"defaultValue": "PQT-Map",
+							"defaultValue": "PQY-Map",
 							"toolTip": "Only alphanumerics, underscores, periods, and hyphens are allowed, and the value must be 1-87 characters long. (11 characters reserved for unique ID)",
 							"placeholder": "Specify a name of new Azure Map",
 							"constraints": {
@@ -231,7 +231,7 @@
 							"name": "appsvcName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "Web App Name",
-							"defaultValue": "PQT",
+							"defaultValue": "PQY",
 							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 1-20 characters long. (20 characters reserved for unique ID)",
 							"placeholder": "Specify a name of new Web App.",
 							"constraints": {
