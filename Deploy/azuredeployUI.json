@@ -180,7 +180,7 @@
 							"name": "storageName",
 							"type": "Microsoft.Common.TextBox",
 							"label": "Storage Account Name",
-							"defaultValue": "p15stor",
+							"defaultValue": "pqystor",
 							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-14 characters long. (10 characters reserved for unique ID)",
 							"placeholder": "Specify a name of new Storage Account",
 							"constraints": {

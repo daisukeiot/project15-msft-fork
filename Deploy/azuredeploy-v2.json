@@ -39,7 +39,7 @@
     },
     "storage_name": {
       "type": "string",
-      "defaultValue": "p15stor"
+      "defaultValue": "pqystor"
     },
     "appsvc_name": {
       "type": "string",
