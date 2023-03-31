@@ -61,7 +61,6 @@
 									"Microsoft.Storage/storageAccounts",
 									"Microsoft.Web/serverfarms",
 									"Microsoft.Web/sites",
-                  					"Microsoft.Maps/accounts",
 									"microsoft.resources/resourcegroups",
 									"Microsoft.DigitalTwins/digitalTwinsInstances"
 								]
