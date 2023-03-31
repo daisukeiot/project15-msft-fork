@@ -17,10 +17,6 @@
 								"constraints": {
 									"validations": [
 										{
-											"permission": "Microsoft.Devices/provisioningServices/Write",
-											"message": "Must have write permission to create a new DPS's settings."
-										},
-										{
 											"permission": "Microsoft.Devices/iothubs/Write",
 											"message": "Must have write permission to create a new IoTHub's settings."
 										},
@@ -61,7 +57,6 @@
 								"resourceTypes": [
                                     "Microsoft.Devices/iothubs",
                                     "Microsoft.EventHub/namespaces",
-                                    "Microsoft.Devices/provisioningServices",
 									"Microsoft.SignalRService/SignalR",
 									"Microsoft.Storage/storageAccounts",
 									"Microsoft.Web/serverfarms",
@@ -140,24 +135,6 @@
 									{
 										"regex": "^(([a-z0-9A-Z]*-)*[a-z0-9A-Z]+){3,39}$",
 										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 3-39 characters long. (11 characters reserved for unique ID)"
-									}
-								]
-							},
-							"visible": true
-						},
-						{
-							"name": "dpsName",
-							"type": "Microsoft.Common.TextBox",
-							"label": "Device Provisioning Service (DPS) Name",
-							"defaultValue": "P15-DPS",
-							"toolTip": "Only alphanumeric characters and hypehens are allowed, and the value must be 1-53 characters long. (11 characters reserved for unique ID)",
-							"placeholder": "Specify a name of new DPS",
-							"constraints": {
-								"required": true,
-								"validations": [
-									{
-										"regex": "^(([a-z0-9A-Z]*-)*[a-z0-9A-Z]+){3,53}$",
-										"message": "Only alphanumeric characters and hypehens are allowed, and the value must be 1-53 characters long. (11 characters reserved for unique ID)"
 									}
 								]
 							},
@@ -342,7 +319,6 @@
 				"addADT": "[steps('basics').addADT]",
 				"UniqueId": "[steps('basics').uniqueId]",
 				"iothub_name": "[steps('iotConfig').iothubName]",
-				"dps_name": "[steps('iotConfig').dpsName]",
 				"eventhubs_name": "[steps('iotConfig').eventhubsName]",
 				"signalr_name": "[steps('iotConfig').signalrName]",
 				"storage_name": "[steps('iotConfig').storageName]",

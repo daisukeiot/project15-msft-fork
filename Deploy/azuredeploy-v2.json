@@ -29,10 +29,6 @@
       "type": "string",
       "defaultValue": "P15-IoTHub"
     },
-    "dps_name": {
-      "type": "string",
-      "defaultValue": "P15-DPS"
-    },
     "eventhubs_name": {
       "type": "string",
       "defaultValue": "P15-EventHubs"
@@ -101,16 +97,6 @@
       "S1": {
         "skuName": "S1",
         "partitionCount": 4
-      }
-    },
-    "dps": {
-      "name": "[concat(parameters('dps_name'), '-', parameters('UniqueID'))]",
-      "apiVersion": "2022-02-05",
-      "sku": "S1"
-    },
-    "dpsSku": {
-      "S1": {
-        "skuName": "S1"
       }
     },
     "eventHubs": {
@@ -250,21 +236,6 @@
                 "name": "[variables('iotHubSku')[variables('iotHub').sku].skuName]",
                 "capacity": 1
               }
-            },
-            {
-              "name": "[variables('dps').name]",
-              "type": "Microsoft.Devices/provisioningServices",
-              "apiVersion": "[variables('dps').apiVersion]",
-              "location": "[variables('location')]",
-              "tags": {
-                "ENV": "[variables('envTag')]"
-              },
-              "dependsOn": [],
-              "sku": {
-                "name": "[variables('dpsSku')[variables('dps').sku].skuName]",
-                "capacity": 1
-              },
-              "properties": {}
             }
           ]
         }
@@ -512,29 +483,6 @@
         "features": "None"
       },
       "resources": []
-    },
-    {
-      "name": "[variables('dps').name]",
-      "type": "Microsoft.Devices/provisioningServices",
-      "apiVersion": "[variables('dps').apiVersion]",
-      "location": "[variables('location')]",
-      "tags": {
-        "ENV": "[variables('envTag')]"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'Deploy-IoT')]",
-        "[resourceId('Microsoft.Devices/IotHubs', variables('iotHub').name)]"
-      ],
-      "properties": {
-        "iotHubs": [
-          {
-            "applyAllocationPolicy": true,
-            "connectionString": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', variables('iothub').name)).hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs/Iothubkeys', variables('iothub').name, 'iothubowner'), variables('iothub').apiVersion).primaryKey)]",
-            "location": "[resourceGroup().location]"
-          }
-        ],
-        "allocationPolicy": "Hashed"
-      }
     },
     {
       "name": "[variables('iotHub').systemTopic]",
@@ -807,7 +755,6 @@
         "[resourceId('Microsoft.SignalRService/SignalR', variables('signalR').name)]",
         "[resourceId('Microsoft.Devices/IotHubs', variables('iotHub').name)]",
         "[resourceId('Microsoft.Maps/accounts', variables('map').name)]",
-        "[resourceId('Microsoft.Devices/provisioningServices', variables('dps').name)]",
         "[resourceId('Microsoft.Resources/deployments', 'Deploy-Webapp')]",
         "[resourceId('Microsoft.Resources/deployments', 'Deploy-Functions')]",
         "[resourceId('Microsoft.Web/sites', variables('appSvc').functionsName)]",
@@ -816,10 +763,7 @@
       "properties": {
         "Azure__SignalR__ConnectionString": "[concat('Endpoint=https://', toLower(variables('signalr').name), '.service.signalr.net;AccessKey=', listKeys(resourceId('Microsoft.SignalRService/signalR', toLower(variables('signalr').name)), variables('signalr').apiVersion).primaryKey, ';Version=1.0;')]",
         "Azure__IoTHub__ConnectionString": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', variables('iothub').name)).hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs/Iothubkeys', variables('iothub').name, 'iothubowner'), variables('iothub').apiVersion).primaryKey)]",
-        "Azure__AzureMap__MapKey": "[listKeys(resourceId('Microsoft.Maps/accounts', variables('map').name), variables('map').apiVersion).primaryKey]",
-        "Azure__Dps__IdScope": "[reference(resourceId('Microsoft.Devices/ProvisioningServices',variables('dps').name)).idScope]",
-        "Azure__Dps__ConnectionString": "[concat('HostName=', variables('dps').name, '.azure-devices-provisioning.net;SharedAccessKeyName=provisioningserviceowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/provisioningServices/keys',variables('dps').name, 'provisioningserviceowner'), variables('dps').apiVersion).primaryKey)]",
-        "Azure__Dps__FunctionsWebHookUrl": "[listsecrets(resourceId('Microsoft.Web/sites/functions', variables('appSvc').functionsName, 'Dps_Processor'), variables('appSvc').apiVersion).trigger_url]"
+        "Azure__AzureMap__MapKey": "[listKeys(resourceId('Microsoft.Maps/accounts', variables('map').name), variables('map').apiVersion).primaryKey]"
       }
     },
     {
