@@ -20,6 +20,9 @@ Click **Deploy to Azure** button below
 
 <a href="https://ms.portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fproject15%2Fmaster%2FDeploy%2Fazuredeploy-v2.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fproject15%2Fmaster%2FDeploy%2FazuredeployUI.json" target="_blank"><img src="deploy-to-azure.svg"/></a>
 
+No DPS Demo
+<a href="https://ms.portal.azure.com/#blade/daisukeiot_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdaisukeiot%2Fproject15-msft-fork%2Fmaster%2FDeploy%2Fazuredeploy-v2.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fdaisukeiot%2Fproject15-msft-fork%2Fmaster%2FDeploy%2FazuredeployUI.json" target="_blank"><img src="deploy-to-azure.svg"/></a>
+
 > [!TIP]  
 > Right click the button below and select **Open link in new tab** or **Open lin in new window**
 
